@@ -44,6 +44,13 @@ basic.forever(function() {
     //console.logValue("z",z)
 
 
+    if (Math.abs(x) <= x) {
+
+        basic.showIcon(IconNames.Angry)
+        basic.clearScreen()  
+    }
+    
+
 
 
     basic.pause(150)

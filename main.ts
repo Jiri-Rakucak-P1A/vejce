@@ -1,4 +1,4 @@
-/*
+
 
 radio.setGroup(2)
 let start = false
@@ -15,9 +15,17 @@ input.onButtonPressed(Button.A, function() {
 radio.onReceivedValue(function(name: string, value: number) {
     
     if (name == "kod"){
-        if (value = 15) {
-            start2 = true
+        while (value == 15) {
+            radio.sendValue("potvrzeni", 15)
             
+        }
+    }
+
+    if (name == "potvrzeni") {
+        if (value == 15) {
+            start2 = true
+            console.log("ano")
+
         }
     }
 
@@ -29,8 +37,12 @@ if (start && start2) {
         basic.pause(10)
         basic.showString("GO!")
     music.stopMelody(MelodyStopOptions.All)
+    console.log("neco")
 }
-*/
+
+
+/*
+
 let x =0
 let y = 0
 let z = 0
@@ -55,3 +67,5 @@ basic.forever(function() {
 
     basic.pause(150)
 })
+
+*/

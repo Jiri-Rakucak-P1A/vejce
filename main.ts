@@ -1,44 +1,40 @@
-
-
 radio.setGroup(2)
-let start = false
-let start2 = false
 
 music.setVolume(225)
 music.changeTempoBy(20)
 
 input.onButtonPressed(Button.A, function() {
-    radio.sendValue("kod", 15)
-    start = true
-
-
-radio.onReceivedValue(function(name: string, value: number) {
-    
-    if (name == "kod"){
-        while (value == 15) {
-            radio.sendValue("potvrzeni", 15)
-            
-        }
-    }
-
-    if (name == "potvrzeni") {
-        if (value == 15) {
-            start2 = true
-            console.log("ano")
-
-        }
-    }
-
-})
-})
-if (start && start2) {
+    radio.sendString("spustit program")
+    console.log("odeslano kod")
     music.startMelody(music.builtInMelody(Melodies.Entertainer), MelodyOptions.Once)
         basic.showString("READY!")
         basic.pause(10)
         basic.showString("GO!")
     music.stopMelody(MelodyStopOptions.All)
-    console.log("neco")
-}
+    console.log("prvni funguje")
+})
+
+radio.onReceivedString(function(receivedString: string) {
+    if (receivedString == "spustit program") {
+        music.startMelody(music.builtInMelody(Melodies.Entertainer), MelodyOptions.Once)
+        basic.showString("READY!")
+        basic.pause(10)
+        basic.showString("GO!")
+        music.stopMelody(MelodyStopOptions.All)
+        console.log("druhy funguje")
+    }
+})
+
+    
+
+
+
+
+
+
+ 
+    
+
 
 
 /*
@@ -68,4 +64,23 @@ basic.forever(function() {
     basic.pause(150)
 })
 
+
+
+radio.onReceivedValue(function(name: string, value: number) {
+    if (name == "code") {
+        start2 = true
+        console.log("kod přišel")
+        radio.sendNumber(1)
+        console.log("potvrzeno")
+    }
+})
+
+radio.onReceivedNumber(function(receivedNumber: number) {
+    if (receivedNumber == 1) {
+        start3 = true
+        console.log("ano")
+        radio.sendValue("kod", 0)
+        console.log("funguje to")
+    }
+})
 */

@@ -1,8 +1,8 @@
-radio.setGroup(2)
 
+/*
+radio.setGroup(2)
 music.setVolume(225)
 music.changeTempoBy(20)
-
 input.onButtonPressed(Button.A, function() {
     radio.sendString("spustit program")
     console.log("odeslano kod")
@@ -24,63 +24,81 @@ radio.onReceivedString(function(receivedString: string) {
         console.log("druhy funguje")
     }
 })
-
-    
-
-
-
-
-
-
- 
-    
-
-
-
-/*
-
-let x =0
-let y = 0
-let z = 0
-input.setAccelerometerRange(AcceleratorRange.TwoG)
-basic.forever(function() {
-    x = input.acceleration(Dimension.X)
-    y = input.acceleration(Dimension.Y)
-    z = input.acceleration(Dimension.Z)
-    console.logValue("x",x)
-    //console.logValue("y",y)
-    //console.logValue("z",z)
-
-
-    if (Math.abs(x) <= x) {
-
-        basic.showIcon(IconNames.Angry)
-        basic.clearScreen()  
-    }
-    
-
-
-
-    basic.pause(150)
-})
-
-
-
-radio.onReceivedValue(function(name: string, value: number) {
-    if (name == "code") {
-        start2 = true
-        console.log("kod přišel")
-        radio.sendNumber(1)
-        console.log("potvrzeno")
-    }
-})
-
-radio.onReceivedNumber(function(receivedNumber: number) {
-    if (receivedNumber == 1) {
-        start3 = true
-        console.log("ano")
-        radio.sendValue("kod", 0)
-        console.log("funguje to")
-    }
-})
 */
+
+
+
+let x = 2
+let y = 2
+
+
+let accX  = 0
+let accY = 0
+let accZ = 0
+
+let calibrateX = accX
+let calibrateY = accY
+let calibrateZ = accZ
+
+let rX = 0
+let rY = 0
+let rZ = 0
+let block = false
+basic.forever(function() {
+
+    accX = input.acceleration(Dimension.X)
+    accY = input.acceleration(Dimension.Y)
+    accZ = input.acceleration(Dimension.Z)
+
+    input.onButtonPressed(Button.B, function() {
+        calibrateX = accX
+        calibrateY = accY
+        calibrateZ = accZ
+        
+        for (let i = 0; i < 6; i++) {
+        basic.showIcon(IconNames.Duck)
+
+            accX = input.acceleration(Dimension.X)
+            accY = input.acceleration(Dimension.Y)
+            accZ = input.acceleration(Dimension.Z)
+            
+        calibrateX = calibrateX + accX
+        calibrateX = calibrateX/2
+
+        calibrateY = calibrateY + accY
+        calibrateY = calibrateY / 2
+
+        calibrateZ = calibrateZ + accZ
+        calibrateZ = calibrateZ / 2
+
+        
+        }
+
+        Math.round(calibrateX)
+        Math.round(calibrateY)
+        Math.round(calibrateZ)
+
+        console.logValue("x", calibrateX)
+        console.logValue("y", calibrateY)
+        console.logValue("z", calibrateZ)
+        basic.clearScreen()
+    block = true
+        
+    })
+    
+    rX = calibrateX + 20
+    rY = calibrateY + 20
+    
+    while (block = true) {
+        if (calibrateX < rX) {
+            basic.showIcon(IconNames.Sad)
+            basic.clearScreen()
+
+        }
+    }
+
+})
+   
+
+
+
